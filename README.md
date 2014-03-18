@@ -2,7 +2,9 @@
 If that, I am the Russian and the text translated the program:3
 
 This "engine" (or shall I call it "framework"? ) is a wrapper round a set standard, but not too convenient libraries. So, it's cross-platform engine)
+
 Look VERSIONS.md
+
 License:	http://www.wtfpl.net/txt/copying/ , but remember me!)
 
 ### Basic use
