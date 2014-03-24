@@ -1,30 +1,15 @@
-/**
- *	Basis engine for 2D games!
- *	Author:		Kaleb|Sadalmalik (i just use different nicknames :D, i'm Gleb)
- *	License:	http://www.wtfpl.net/txt/copying/
-**/
-
 package ru.ifaculty.java.BasicEngine2D;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferStrategy;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
-import javax.swing.JFrame;
-
-import ru.ifaculty.java.BasicEngine2D.audio.Sound;
 import ru.ifaculty.java.BasicEngine2D.audio.SoundSourceLoader;
 import ru.ifaculty.java.BasicEngine2D.graphic.Sprite;
 import ru.ifaculty.java.BasicEngine2D.graphic.SpriteSourceLoader;
@@ -33,151 +18,67 @@ public class BasicEngine2D
 	{
 	public		static	final	String	name		=	"Basic Engine 2D"	;
 	public		static	final	int		preVersion	=			0			;
-	public		static	final	int 	subVersion	=			1			;
-	public		static	final	int 	reliz		=			7			;
+	public		static	final	int 	subVersion	=			2			;
+	public		static	final	int 	reliz		=			1			;
 	public		static	final	String	auth		=		 "Kaleb"		;
 	@SuppressWarnings("unused")	//всё норм, компилятору не нравятся условия на статичных данных... но мы-то знаем что данные ещё будут меняться!)
 	public		static	String	info()	{	return(name+", version "+preVersion+"."+subVersion+"."+((reliz>9)?(reliz):("0"+reliz))+", by "+auth);	}	//	No dead code! >:@
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	ПРОЩЕ НЕКУДА
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public	static	void	JUST_DO_IT( Wrap W )	{	start(W);	}
-	
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//	Базовые инициализации, окно
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	protected	static	JFrame	WINDOW;
-	protected	static	Canvas	CANVAS;
-	protected	static	WindowAdapter	myWindowAdapter;
-	protected	static	KeyListener		myKeyListener;
-	protected	static	MouseListener	myMouseListener;
-	private		BasicEngine2D(){}
-	
-	public	static	void	createWindow( )							{	createWindow( 1024 , 768 , null );	}
-	public	static	void	createWindow( int xSize , int ySize )	{	createWindow( xSize , ySize , null );	}
-	public	static	void	createWindow( int xSize , int ySize , String title )
+	private	BasicEngine2D(){}
+
+	private	static	Display			display=null;
+	private	static	Display.listner	listner=null;
+	static
 		{
-		CANVAS = new Canvas();
-		WINDOW = new JFrame();
-		WINDOW.add(CANVAS);
-		WINDOW.pack();
-		myWindowAdapter = new WindowAdapter()
+		//	Вообще весь этот финт с выносом контроля окна в Display довольно сомнителен
+		//	Ибо код не сильно уменьчшился. Но всё же какая-то логика в этом есть - если кому-либо понадобиться - можно использовать Display отдельно
+		listner = new Display.listner()
 			{
-			public void windowClosing(WindowEvent arg0) { BasicEngine2D.execute=false; }	//	это немного быдлокодерски...
+			public void close()	{	execute=false;	}
+			public void rend(Graphics2D G)				{	render(G);	}
+			public void keyPressAction(KeyEvent K)		{	if( wrap!=null )	wrap.keyPressAction( K );	}
+			public void keyRelizAction(KeyEvent K)		{	if( wrap!=null )	wrap.keyRelizAction( K );	}
+			public void keyTypedAction(KeyEvent K)		{	if( wrap!=null )	wrap.keyTypedAction( K );	}
+			public void mousePressAction(MouseEvent M)	{	if( wrap!=null )	wrap.mousePressAction( M );	}
+			public void mouseRelizAction(MouseEvent M)	{	if( wrap!=null )	wrap.mouseRelizAction( M );	}
 			};
-		myKeyListener = new KeyListener()
-			{
-			public void keyPressed	(KeyEvent K)	{keyPressAction(K);}
-			public void keyReleased	(KeyEvent K)	{keyRelizAction(K);}
-			public void keyTyped	(KeyEvent K)	{keyTypedAction(K);}
-			};
-		myMouseListener = new MouseListener()
-			{
-			public void mouseClicked	(MouseEvent e){}
-			public void mouseEntered	(MouseEvent e){}
-			public void mouseExited		(MouseEvent e){}
-			public void mousePressed	(MouseEvent e){mousePressAction(e);}
-			public void mouseReleased	(MouseEvent e){mouseRelizAction(e);}
-			};
-		WINDOW.addWindowListener(myWindowAdapter);
-		WINDOW.addKeyListener	(myKeyListener	);
-		CANVAS.addMouseListener	(myMouseListener);
-		WINDOW.setResizable(false);
-		CANVAS.setSize(xSize, ySize);
-		WINDOW.pack();
-		setWindowTitle(title);
-		WINDOW.setLocationRelativeTo(null);
-		WINDOW.setFocusable(true);
-		/**	HOTFIX:	при наличие внуртеннего объекта если на него поподает фокус, окно перестаёт регистрировать кнопки.	**/
-		CANVAS.setFocusable(false);	
-		WINDOW.setVisible(true);
+		display = new Display( listner );
 		}
-	
-	private	static	String	Title=info();
-	public	static	void	setWindowTitle		(String title)	{	if( title!=null	)Title=title;	if( WINDOW!=null )WINDOW.setTitle(Title);	}
-	public	static	void	setWindowPosition	(int x, int y)	{	if( WINDOW!=null )	{	WINDOW.setBounds(x,y,1,1);	WINDOW.pack();	}	}
-	public	static	void	setWindowSize		(int x, int y)	{	if( CANVAS!=null )	{	CANVAS.setSize	( x , y );	WINDOW.pack();	}	}
-	public	static	void	setWindowResizable	(boolean flag)	{	if( WINDOW!=null )	{	WINDOW.setResizable(flag);	WINDOW.pack();	}	}
-	
-	public	static	void	destroyWindow()
-		{
-		if( WINDOW==null )	return;
-		WINDOW.removeWindowListener	(myWindowAdapter);
-		WINDOW.removeKeyListener	(myKeyListener	);
-		CANVAS.removeMouseListener	(myMouseListener);
-		WINDOW.setVisible(false);
-		WINDOW.dispose();
-		WINDOW.remove(CANVAS);
-		CANVAS=null;
-		WINDOW=null;
-		}
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Получение состояния окна и мышки
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public	static int xSize, ySize;
-	public	static int xHalf, yHalf;
-	public	static void updateOffset()
-		{
-		if( CANVAS==null ) return;
-		xSize	=	CANVAS.getWidth()	;		xHalf	=	(xSize+1)/2	;
-		ySize	=	CANVAS.getHeight()	;		yHalf	=	(ySize+1)/2	;
-		if( isAutoScaleSound2D() )	Sound.setScale2D(Math.min(xHalf,yHalf));
-		}
-	
-	public	static int xMouse, yMouse;
-	public	static boolean mouseIn=false;
-	public	static void updateMouse()
-		{
-		if( CANVAS==null ) return;
-		Point P = CANVAS.getMousePosition();
-		if( P!=null )
-			{
-			mouseIn	=		true		;
-			xMouse	=		P.x-xHalf	;
-			yMouse	=	ySize-P.y-yHalf	;
-			}
-		else{	mouseIn=false;	}
-		}
+	public	static	Display	getDisplay			()				{	return display ;	}
+	public	static	void	setWindowTitle		(String title)	{	if ( display!=null )	display.setWindowTitle(title);		}
+	public	static	void	setWindowPosition	(int x, int y)	{	if ( display!=null )	display.setWindowPosition(x,y);		}
+	public	static	void	setWindowSize		(int x, int y)	{	if ( display!=null )	display.setWindowSize(x,y);			}
+	public	static	void	setWindowResizable	(boolean flag)	{	if ( display!=null )	display.setWindowResizable(flag);	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Настраиваемые параметры
+	//	Настраиваемые параметры		BitSet, и зафиг я вручную парился?
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	
 	public	static	boolean	execute=false;
-	private	static	final int show_fps			=	0x00000001	;
-	private	static	final int show_source_info	=	0x00000002	;
-	private	static	final int show_window_info	=	0x00000004	;
-	private	static	final int show_mouse_info	=	0x00000008	;
-	private	static	final int optimize			=	0x00000010	;
-	private	static	final int auto_scale_sound	=	0x00000020	;
-	private	static	final int exit_on_end		=	0x80000000	;
-	private	static	int	status = show_fps | optimize | auto_scale_sound | exit_on_end ;	//	Flag pack, запас - 32 флага
+	private	static	BitSet	state=new BitSet(8);
+	static	{	showFPS(true);	autoScaleSound2D(true);	exitOnEnd(true);	optimize(true);	}
 
-	public	static	void	showAllInfo(boolean flag)
-		{
-		if( flag )	{	status = status | show_fps | show_source_info | show_window_info | show_mouse_info ;	}
-		else		{	status = status&~(show_fps | show_source_info | show_window_info | show_mouse_info);	}
-		}
-	public	static	void	showFPS(boolean flag)			{	status = (status&~show_fps)			| (flag?show_fps:0) ;			}
-	public	static	void	showSourceInfo(boolean flag)	{	status = (status&~show_source_info)	| (flag?show_source_info:0) ;	}
-	public	static	void	showWindowInfo(boolean flag)	{	status = (status&~show_window_info)	| (flag?show_window_info:0) ;	}
-	public	static	void	showMouseInfo(boolean flag)		{	status = (status&~show_mouse_info)	| (flag?show_mouse_info:0) ;	}
-	public	static	void	exitOnEnd(boolean flag)			{	status = (status&~exit_on_end)		| (flag?exit_on_end:0) ;		}
-	public	static	void	optimize(boolean flag)			{	status = (status&~optimize)			| (flag?optimize:0) ;			}
-	public	static	void	autoScaleSound2D(boolean flag)	{	status = (status&~show_mouse_info)	| (flag?auto_scale_sound:0) ;	}
+	public	static	void	showAllInfo(boolean f)			{	showFPS(f);	showWindowInfo(f);	showMouseInfo(f);	showSourceInfo(f);	}
 	
-	public	static	boolean	isShowFPS()						{	return( (status&show_fps) > 0 );			}
-	public	static	boolean	isShowSourceInfo()				{	return( (status&show_source_info) > 0 );	}
-	public	static	boolean	isShowWindowInfo()				{	return( (status&show_window_info) > 0 );	}
-	public	static	boolean	isShowMouseInfo()				{	return( (status&show_mouse_info) > 0 );		}
-	public	static	boolean	isExitOnEnd()					{	return( (status&exit_on_end) > 0 );			}
-	public	static	boolean	isOptimize()					{	return( (status&optimize) > 0 );			}
-	public	static	boolean	isAutoScaleSound2D()			{	return( (status&auto_scale_sound) > 0 );	}
+	public	static	void	showFPS(boolean flag)			{	state.set(0,flag);	}
+	public	static	void	showWindowInfo(boolean flag)	{	state.set(1,flag);	}
+	public	static	void	showMouseInfo(boolean flag)		{	state.set(2,flag);	}
+	public	static	void	showSourceInfo(boolean flag)	{	state.set(3,flag);	}
+	public	static	void	autoScaleSound2D(boolean flag)	{	state.set(4,flag);	}
+	public	static	void	exitOnEnd(boolean flag)			{	state.set(5,flag);	}
+	public	static	void	optimize(boolean flag)			{	state.set(6,flag);	}
+	
+	public	static	boolean	isShowFPS()						{	return state.get(0);	}
+	public	static	boolean	isShowWindowInfo()				{	return state.get(1);	}
+	public	static	boolean	isShowMouseInfo()				{	return state.get(2);	}
+	public	static	boolean	isShowSourceInfo()				{	return state.get(3);	}
+	public	static	boolean	isAutoScaleSound2D()			{	return state.get(4);	}
+	public	static	boolean	isExitOnEnd()					{	return state.get(5);	}
+	public	static	boolean	isOptimize()					{	return state.get(6);	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//	Обёртка и главный цикл
@@ -187,29 +88,28 @@ public class BasicEngine2D
 	public	static	void setWrap( Wrap W )	{wrap=W;}
 	private static	void ident()
 		{
-		if( wrap==null )return;
-		wrap.xSize=xSize;	wrap.ySize=ySize;
-		wrap.xHalf=xHalf;	wrap.yHalf=yHalf;
-		wrap.xMouse=xMouse;	wrap.yMouse=yMouse;
+		if( wrap==null || display==null )return;
+		wrap.xSize	=	display.xSize;		wrap.ySize	=	display.ySize	;
+		wrap.xHalf	=	display.xHalf;		wrap.yHalf	=	display.yHalf	;
+		wrap.xMouse	=	display.xMouse;		wrap.yMouse	=	display.yMouse	;
 		}
 	
 	private	static	Event	calcFPS, step, anim;
-	public	static	void	setStepDelay	(long d)	{	step.setDelay(d);	}	//	контроль скрытых эвентов... иначе никак =( Нет в мире идеальных концепций!
-	public	static	void	setStepFreqency	(float f)	{	step.setFreqency(f);}	//	не убивать хорошую же концепцию?
-	public	static	void	setAnimDelay	(long d)	{	anim.setDelay(d);	}
-	public	static	void	setAnimFreqency	(float f)	{	anim.setFreqency(f);}
+	public	static	void	setStepDelay	(long d)	{	if(step!=null)	step.setDelay(d);	}	//	контроль скрытых эвентов... иначе никак =( Нет в мире идеальных концепций!
+	public	static	void	setStepFreqency	(float f)	{	if(step!=null)	step.setFreqency(f);}	//	не убивать хорошую же концепцию?
+	public	static	void	setAnimDelay	(long d)	{	if(anim!=null)	anim.setDelay(d);	}
+	public	static	void	setAnimFreqency	(float f)	{	if(anim!=null)	anim.setFreqency(f);}
 	
 	private	static	List<Event>events	=	new ArrayList<Event>();			//	Список вторичных событий создаваемых извне
 	public	static	void	addEvent(Event E)	{	events.add(E);		}
 	public	static	void	delEvent(Event E)	{	events.remove(E);	}
 
 	public	static	int		FPS=0, FPSCounter=0;
-	public	static	void	updateInput()		{	updateMouse();updateOffset();ident();	}
-	public	static	void	start( Wrap W )		{	setWrap( W );createWindow();start();	}
+	public	static	void	start( Wrap W )		{	setWrap( W );	start();	}
 	public	static	void	start()
 		{
-		if( wrap==null )	{	return;			}
-		if( WINDOW==null )	{	createWindow();	}
+		if( wrap==null )		{	return;					}
+		if( !display.ready() )	{	display.createWindow();	}
 		
 //		Кросота!!! дефолтные эвенты
 		calcFPS = new Event(1000,"Calc FPS")		{public void exec(){	FPS=FPSCounter;	FPSCounter=0;	}};
@@ -224,11 +124,11 @@ public class BasicEngine2D
 			{
 			next=Long.MAX_VALUE;	//	Событийная модель рулез!
 			{{	{{calcFPS.test();}}		{{next=min(next,calcFPS.nextTime());}}	}}
-			updateInput();
+			ident();
 			{{	{{step.test();}}		{{next=min(next,step.nextTime());}}		}}
 			for( Event T : events )
 			{{	{{T.test();}}			{{next=min(next,T.nextTime());}}		}}
-			rend();
+			display.rend();
 			{{	{{anim.test();}}		{{next=min(next,anim.nextTime());}}		}}
 			SpriteSourceLoader.loadingStep();
 			SoundSourceLoader.loadingStep();
@@ -241,8 +141,8 @@ public class BasicEngine2D
 		
 		wrap.exit();
 		
-		if( WINDOW!=null )	{	destroyWindow();	}
-		if( isExitOnEnd() )	{	System.exit(0);		}
+		if( display.ready() )	{	display.destroyWindow();	}
+		if( isExitOnEnd() )		{	System.exit(0);		}
 		}
 	private	static	int		queue	(				)	{	return(SpriteSourceLoader.queue()+SoundSourceLoader.queue());	}
 	private	static	long	min		(long a, long b )	{	return(a<b?a:b);	}
@@ -258,7 +158,7 @@ public class BasicEngine2D
 		r.append("\n");
 		return( r.toString() );
 		}
-	
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//	Рендер
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,14 +167,12 @@ public class BasicEngine2D
 	private	static Color infoColor	=	Color.WHITE	;
 	public	static void setBackgroundColor	( Color c )	{	if(c!=null)background=c;	}
 	public	static void setInfoColor		( Color c )	{	if(c!=null)infoColor=c;	}
-	public	static void rend()
+	public	static void render( Graphics2D G )
 		{
-		BufferStrategy bs = CANVAS.getBufferStrategy();
-		if( bs == null ){	CANVAS.createBufferStrategy(3);	return;	}
-		Graphics2D G = (Graphics2D)bs.getDrawGraphics();
 		G.setColor( background );
-		G.fillRect( 0 , 0 , xSize , ySize );
-		GraphicsWrap GW = new GraphicsWrap( G , xHalf , yHalf );
+		G.fillRect( 0 , 0 , display.xSize , display.ySize );
+		G.setColor( infoColor );
+		GraphicsWrap GW = new GraphicsWrap( G , display.xHalf , display.yHalf );
 		
 		if( wrap!=null )wrap.rend(GW);
 		
@@ -288,35 +186,23 @@ public class BasicEngine2D
 		if( isShowWindowInfo() )
 			{
 			y+=15;	GW.drawRawString("Window",20,y);
-			y+=15;	GW.drawRawString("size",20,y);		GW.drawRawString(xSize+" "+ySize,80,y);
-			y+=15;	GW.drawRawString("center",20,y);	GW.drawRawString(xHalf+" "+yHalf,80,y);
+			y+=15;	GW.drawRawString("size",20,y);		GW.drawRawString(display.xSize+" "+display.ySize,80,y);
+			y+=15;	GW.drawRawString("center",20,y);	GW.drawRawString(display.xHalf+" "+display.yHalf,80,y);
 			y+=10;
 			}
 		if( isShowMouseInfo() )
 			{
 			y+=15;	GW.drawRawString("Mouse",20,y);
-			y+=15;	GW.drawRawString("position",20,y);		GW.drawRawString(xMouse+" "+yMouse,80,y);
-			y+=15;	GW.drawRawString("in window",20,y);		GW.drawRawString(""+mouseIn,80,y);
+			y+=15;	GW.drawRawString("position",20,y);		GW.drawRawString(display.xMouse+" "+display.yMouse,80,y);
+			y+=15;	GW.drawRawString("in window",20,y);		GW.drawRawString(""+display.mouseIn,80,y);
 			y+=10;
 			}
 		if( isShowSourceInfo() )
 			{
-			GW.drawString(SpriteSourceLoader.getState(),10,ySize-35);
-			GW.drawString(SoundSourceLoader.getState(),10,ySize-15);
+			GW.drawString(SpriteSourceLoader.getState(),10,display.ySize-35);
+			GW.drawString(SoundSourceLoader.getState(),10,display.ySize-15);
 			}
-		G.dispose();
-		bs.show();
 		}
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Сквозная проброска управления
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private	static void keyPressAction(KeyEvent E)		{	updateInput();	if( wrap!=null )	wrap.keyPressAction( E );	}
-	private	static void keyRelizAction(KeyEvent E)		{	updateInput();	if( wrap!=null )	wrap.keyRelizAction( E );	}
-	private	static void keyTypedAction(KeyEvent E)		{	updateInput();	if( wrap!=null )	wrap.keyTypedAction( E );	}
-	private	static void mousePressAction(MouseEvent E)	{	updateInput();	if( wrap!=null )	wrap.mousePressAction( E );	}
-	private	static void mouseRelizAction(MouseEvent E)	{	updateInput();	if( wrap!=null )	wrap.mouseRelizAction( E );	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//	Загрузка ресурсов
@@ -370,8 +256,8 @@ public class BasicEngine2D
 				for (Thread thread : threadList)
 					{
 					threads	.add(new StringBuilder().append(thread.getThreadGroup().getName())
-							.append("	:	").append(thread.getName()).append("	:	PRIORITY: ")
-							.append(thread.getPriority()).toString());
+					.append("	:	").append(thread.getName()).append("	:	PRIORITY: ")
+					.append(thread.getPriority()).toString());
 					}
 				}
 			}

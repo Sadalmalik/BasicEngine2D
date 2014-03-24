@@ -61,8 +61,8 @@ public class SpriteSource extends Source
 		{
 		if( !ready )	return( false );
 		
-		int px = BasicEngine2D.xHalf+xOff-xHalf;
-		int py = BasicEngine2D.yHalf-yOff-yHalf;
+		int px = BasicEngine2D.getDisplay().xHalf+xOff-xHalf;	//	как некрасиво... Возможно я зря начал все эти попытки приведения систем координат и их следует убрать?
+		int py = BasicEngine2D.getDisplay().yHalf-yOff-yHalf;
 		
 		if( x>=px && x<px+xSize && y>=py && y<py+ySize )
 			{
@@ -79,7 +79,7 @@ public class SpriteSource extends Source
 		int sx, sy;
 		int px = xOff-xHalf;
 		int py = yOff-yHalf;
-		if( px<-xSize || px>BasicEngine2D.xSize || py<-ySize || py>BasicEngine2D.ySize )return;
+		if( px<-xSize || px>BasicEngine2D.getDisplay().xSize || py<-ySize || py>BasicEngine2D.getDisplay().ySize )return;
 		Color T=graph.getColor();
 		if( ready )
 			{
