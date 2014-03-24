@@ -1,8 +1,8 @@
 /**
- *	Basis engine for 2D games!
- *	Author:		Kaleb|Sadalmalik (i just use different nicknames :D, i'm Gleb)
+ *	Author:		Kaleb(Sadalmalik) (i just use different nicknames :D, i'm Gleb)
  *	License:	http://www.wtfpl.net/txt/copying/
 **/
+
 package ru.ifaculty.java.BasicEngine2D;
 
 import java.awt.Canvas;

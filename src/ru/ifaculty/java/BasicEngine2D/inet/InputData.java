@@ -1,5 +1,5 @@
 /**
- *	Author:		Kaleb|Sadalmalik (i just use different nicknames :D, i'm Gleb)
+ *	Author:		Kaleb(Sadalmalik) (i just use different nicknames :D, i'm Gleb)
  *	License:	http://www.wtfpl.net/txt/copying/
  *
  *	This code is not ready :D
