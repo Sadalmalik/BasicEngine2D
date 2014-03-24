@@ -20,7 +20,6 @@ import java.awt.image.BufferStrategy;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFrame;
