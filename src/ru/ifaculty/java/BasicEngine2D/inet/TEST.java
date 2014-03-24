@@ -29,6 +29,9 @@ public class TEST
 		System.out.println( DINP.available() + "	" + I.available() + "	" + DINP.readFloat	()	);
 		System.out.println( DINP.available() + "	" + I.available() + "	" + DINP.readUTF	()	);
 		System.out.println( DINP.available() + "	" + I.available() );
+		
+		DOUT.close();
+		DINP.close();
 		//*/
 		}
 	}

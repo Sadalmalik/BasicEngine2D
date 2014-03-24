@@ -7,7 +7,6 @@
 
 package ru.ifaculty.java.BasicEngine2D.inet;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +31,10 @@ public class Message
 	
 	public Message()
 		{
+		System.out.println( MID );
+		System.out.println( FROM );
+		System.out.println( TO );
+		System.out.println( LEN );
 		}
 	
 	public	OutputStream getOutputStream() throws IOException

@@ -5,8 +5,6 @@
 
 package ru.ifaculty.java.BasicEngine2D.graphic;
 
-import ru.ifaculty.java.BasicEngine2D.audio.SoundSource;
-
 public class SpriteSourceLoader
 	{
 	public static int available=0, loaded=0, wreck=0;

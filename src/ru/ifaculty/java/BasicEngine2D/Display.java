@@ -6,7 +6,6 @@
 package ru.ifaculty.java.BasicEngine2D;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;

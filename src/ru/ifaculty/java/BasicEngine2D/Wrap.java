@@ -5,8 +5,6 @@
 
 package ru.ifaculty.java.BasicEngine2D;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -35,5 +33,5 @@ public abstract class Wrap
 	public	abstract void mousePressAction(MouseEvent E);
 	public	abstract void mouseRelizAction(MouseEvent E);
 	
-	public	static void sleep(long t)	{ BasicEngine2D.sleep(t); }	//	Обёртка для обёртки
+	public	static void sleep(long t)	{ BasicEngine2D.sleep(t); }	//	РћР±С‘СЂС‚РєР° РґР»СЏ РѕР±С‘СЂС‚РєРё
 	}

@@ -8,7 +8,6 @@ package ru.ifaculty.java.BasicEngine2D.graphic;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
