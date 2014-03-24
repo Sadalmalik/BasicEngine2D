@@ -38,9 +38,9 @@ public class SpriteSource extends Source
 		}
 	
 	public BufferedImage[] img;
-	public short xSize, ySize;	//	Îêåé, ìû âñå çíàåì ÷òî êàðòèíêè ðàçìåðîì áîëüøå ÷åì 32000 òî÷åê íà 32000
-	public short xHalf, yHalf;	//	òî÷åê íå ñóùåñòâóþò. À åñëè è åñòü - ó íàñ îíè íå ïîÿâÿòñÿ
-	public boolean scale=false;	//	îáëåã÷àåì ñåáå ïîèñê ïî ñèãíàòóðå
+	public short xSize, ySize;	//	ÐžÐºÐµÐ¹, Ð¼Ñ‹ Ð²ÑÐµ Ð·Ð½Ð°ÐµÐ¼ Ñ‡Ñ‚Ð¾ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð¾Ð¼ Ð±Ð¾Ð»ÑŒÑˆÐµ Ñ‡ÐµÐ¼ 32000 Ñ‚Ð¾Ñ‡ÐµÐº Ð½Ð° 32000
+	public short xHalf, yHalf;	//	Ñ‚Ð¾Ñ‡ÐµÐº Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‚. Ð ÐµÑÐ»Ð¸ Ð¸ ÐµÑÑ‚ÑŒ - Ñƒ Ð½Ð°Ñ Ð¾Ð½Ð¸ Ð½Ðµ Ð¿Ð¾ÑÐ²ÑÑ‚ÑÑ
+	public boolean scale=false;	//	Ð¾Ð±Ð»ÐµÐ³Ñ‡Ð°ÐµÐ¼ ÑÐµÐ±Ðµ Ð¿Ð¾Ð¸ÑÐº Ð¿Ð¾ ÑÐ¸Ð³Ð½Ð°Ñ‚ÑƒÑ€Ðµ
 	public int Frames=0;
 	
 	public SpriteSource( String image )
@@ -91,7 +91,7 @@ public class SpriteSource extends Source
 				graph.fillRect(px, py, xSize, ySize);
 				}
 			}
-		else{	//	Åñëè èçîáðàæåíèÿ ïî êàêîé-òî ïðè÷èíå íå ãîòîâû - ðèñóåì ïóñòîé êâàäðàòèê.
+		else{	//	Ð•ÑÐ»Ð¸ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ Ð¿Ð¾ ÐºÐ°ÐºÐ¾Ð¹-Ñ‚Ð¾ Ð¿Ñ€Ð¸Ñ‡Ð¸Ð½Ðµ Ð½Ðµ Ð³Ð¾Ñ‚Ð¾Ð²Ñ‹ - Ñ€Ð¸ÑÑƒÐµÐ¼ Ð¿ÑƒÑÑ‚Ð¾Ð¹ ÐºÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð¸Ðº.
 			graph.setColor( (wreck)?(isBreak):(notLoad) );
 			sx=xSize>10?xSize:10;
 			sy=ySize>10?ySize:10;
@@ -118,13 +118,13 @@ public class SpriteSource extends Source
 				counter_x = 1;	counter_y = 1;
 				}
 			else{
-				counter_x = xFrame/xSize;	//	×èñëî êàäðîâ â ñòðîêå
-				counter_y = yFrame/ySize;	//	×èñëî êàäðîâ â ñòîëáöå
+				counter_x = xFrame/xSize;	//	Ð§Ð¸ÑÐ»Ð¾ ÐºÐ°Ð´Ñ€Ð¾Ð² Ð² ÑÑ‚Ñ€Ð¾ÐºÐµ
+				counter_y = yFrame/ySize;	//	Ð§Ð¸ÑÐ»Ð¾ ÐºÐ°Ð´Ñ€Ð¾Ð² Ð² ÑÑ‚Ð¾Ð»Ð±Ñ†Ðµ
 				set=true;
 				}
 			Frames = counter_x*counter_y;
-			if( Frames>0 && Frames<1000000 )//	ñòðàøíî ïðåäñòàâèòü àíèìàöèþ ñ òàêèì ÷èñëîì êàäðîâ...
-				{
+			if( Frames>0 && Frames<1000000 )//	ÑÑ‚Ñ€Ð°ÑˆÐ½Ð¾ Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸ÑŽ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ Ñ‡Ð¸ÑÐ»Ð¾Ð¼ ÐºÐ°Ð´Ñ€Ð¾Ð²...
+				{							//	Ð’ÐµÑ€Ð½ÐµÐµ Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¾ Ð½Ðµ Ð¿Ñ€Ð¾Ð±Ð»ÐµÐ¼Ð°, Ð½Ð¾ ÑƒÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°Ñ Ñ‡Ñ‚Ð¾ Ñ Ð²ÑÑ‘ Ð´ÐµÐ»Ð°ÑŽ Ð¸Ð· Ñ€Ð°ÑÑÑ‡Ñ‘Ñ‚Ð° Ð½Ð° Ð½ÐµÐ±Ð¾Ð»ÑŒÑˆÐ¸Ðµ Ð¸Ð³Ñ€Ñ‹ - ÑÑ‚Ð¾ Ð½Ðµ Ð½ÑƒÐ¶Ð½Ð¾.
 				if( Frames==1 && set )
 					System.out.println("WARNING: passible incorrect frame scale selected!");
 				img = new BufferedImage[Frames];

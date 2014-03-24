@@ -73,7 +73,7 @@ public class SoundSource extends Source
 			wreck=true;
 			return;
 			}
-		//	Всё, звук загружен, его можно использовать!
+		//	Р’СЃС‘, Р·РІСѓРє Р·Р°РіСЂСѓР¶РµРЅ, РµРіРѕ РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ!
 		FrameSize/=FrameDivisor;
 		ready = true;
 		}

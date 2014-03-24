@@ -29,8 +29,8 @@ public class Sprite
 	public	int		xHalf=-1, yHalf=-1;
 	public	int	size(){	return(size);	}
 
-	public	Sprite( SpriteSource sr� )								{	sprites.add(this);	source = sr�;	}
-	public	Sprite( SpriteSource sr� , int xh , int yh )			{	sprites.add(this);	source = sr�;	setSize(xh,yh);	}
+	public	Sprite( SpriteSource src )								{	sprites.add(this);	source = src;	}
+	public	Sprite( SpriteSource src , int xh , int yh )			{	sprites.add(this);	source = src;	setSize(xh,yh);	}
 	public	Sprite( String image )									{	sprites.add(this);	source = SpriteSourceLoader.getSpriteSource( image );			}
 	public	Sprite( String image , int x , int y )					{	sprites.add(this);	source = SpriteSourceLoader.getSpriteSource( image , x , y );	}
 	public	Sprite( String image , int x , int y , int xh , int yh ){	sprites.add(this);	source = SpriteSourceLoader.getSpriteSource( image , x , y );	setSize(xh,yh);	}
@@ -39,7 +39,7 @@ public class Sprite
 	public	void	play()	{	run=true;	}
 	public	void	stop()	{	run=false;	}
 	
-	private	Action[]actions=null;
+	private	Action[]actions=null;	//	А ВОТ ТУТ ВОЗМОЖНО и стоило бы использовать лямбды. Но я пока подожду с этим.
 	public	void	setAction( int F , Action A )	{	if( F>=0 && F<actions.length )		actions[F]=A;	}
 	public	Action	getAction( int F )	{	if( F>=0 && F<actions.length )return(actions[F]);return null;	}
 	public	void	setSize( int xh , int yh )	{	xHalf=xh;	yHalf=yh;	}

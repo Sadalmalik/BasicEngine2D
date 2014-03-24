@@ -36,17 +36,17 @@ public class BasicEngine2D
 	public		static	final	int 	subVersion	=			1			;
 	public		static	final	int 	reliz		=			7			;
 	public		static	final	String	auth		=		 "Kaleb"		;
-	@SuppressWarnings("unused")	//всё норм, компилятору не нравятся условия на статичных данных... но мы-то знаем что данные ещё будут меняться!)
+	@SuppressWarnings("unused")	//РІСЃС‘ РЅРѕСЂРј, РєРѕРјРїРёР»СЏС‚РѕСЂСѓ РЅРµ РЅСЂР°РІСЏС‚СЃСЏ СѓСЃР»РѕРІРёСЏ РЅР° СЃС‚Р°С‚РёС‡РЅС‹С… РґР°РЅРЅС‹С…... РЅРѕ РјС‹-С‚Рѕ Р·РЅР°РµРј С‡С‚Рѕ РґР°РЅРЅС‹Рµ РµС‰С‘ Р±СѓРґСѓС‚ РјРµРЅСЏС‚СЊСЃСЏ!)
 	public		static	String	info()	{	return(name+", version "+preVersion+"."+subVersion+"."+((reliz>9)?(reliz):("0"+reliz))+", by "+auth);	}	//	No dead code! >:@
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	ПРОЩЕ НЕКУДА
+	//	РџР РћР©Р• РќР•РљРЈР”Рђ
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public	static	void	JUST_DO_IT( Wrap W )	{	start(W);	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Базовые инициализации, окно
+	//	Р‘Р°Р·РѕРІС‹Рµ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё, РѕРєРЅРѕ
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	protected	static	JFrame	WINDOW;
@@ -66,7 +66,7 @@ public class BasicEngine2D
 		WINDOW.pack();
 		myWindowAdapter = new WindowAdapter()
 			{
-			public void windowClosing(WindowEvent arg0) { BasicEngine2D.execute=false; }	//	немного быдлокодерски
+			public void windowClosing(WindowEvent arg0) { BasicEngine2D.execute=false; }	//	СЌС‚Рѕ РЅРµРјРЅРѕРіРѕ Р±С‹РґР»РѕРєРѕРґРµСЂСЃРєРё...
 			};
 		myKeyListener = new KeyListener()
 			{
@@ -91,7 +91,7 @@ public class BasicEngine2D
 		setWindowTitle(title);
 		WINDOW.setLocationRelativeTo(null);
 		WINDOW.setFocusable(true);
-		/**	HOTFIX:	при наличие внуртеннего объекта если на него поподает фокус, окно перестаёт регистрировать кнопки.	**/
+		/**	HOTFIX:	РїСЂРё РЅР°Р»РёС‡РёРµ РІРЅСѓСЂС‚РµРЅРЅРµРіРѕ РѕР±СЉРµРєС‚Р° РµСЃР»Рё РЅР° РЅРµРіРѕ РїРѕРїРѕРґР°РµС‚ С„РѕРєСѓСЃ, РѕРєРЅРѕ РїРµСЂРµСЃС‚Р°С‘С‚ СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ РєРЅРѕРїРєРё.	**/
 		CANVAS.setFocusable(false);	
 		WINDOW.setVisible(true);
 		}
@@ -116,7 +116,7 @@ public class BasicEngine2D
 		}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Получение состояния окна и мышки
+	//	РџРѕР»СѓС‡РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РѕРєРЅР° Рё РјС‹С€РєРё
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public	static int xSize, ySize;
@@ -145,7 +145,7 @@ public class BasicEngine2D
 		}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Настраиваемые параметры
+	//	РќР°СЃС‚СЂР°РёРІР°РµРјС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public	static	boolean	execute=false;
@@ -156,7 +156,7 @@ public class BasicEngine2D
 	private	static	final int optimize			=	0x00000010	;
 	private	static	final int auto_scale_sound	=	0x00000020	;
 	private	static	final int exit_on_end		=	0x80000000	;
-	private	static	int	status = show_fps | optimize | auto_scale_sound | exit_on_end ;	//	Flag pack, запас - 32 флага
+	private	static	int	status = show_fps | optimize | auto_scale_sound | exit_on_end ;	//	Flag pack, Р·Р°РїР°СЃ - 32 С„Р»Р°РіР°
 
 	public	static	void	showAllInfo(boolean flag)
 		{
@@ -180,7 +180,7 @@ public class BasicEngine2D
 	public	static	boolean	isAutoScaleSound2D()			{	return( (status&auto_scale_sound) > 0 );	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Обёртка и главный цикл
+	//	РћР±С‘СЂС‚РєР° Рё РіР»Р°РІРЅС‹Р№ С†РёРєР»
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private	static	Wrap wrap;
@@ -194,12 +194,12 @@ public class BasicEngine2D
 		}
 	
 	private	static	Event	calcFPS, step, anim;
-	public	static	void	setStepDelay	(long d)	{	step.setDelay(d);	}	//	контроль скрытых эвентов... иначе никак =(
-	public	static	void	setStepFreqency	(float f)	{	step.setFreqency(f);}	//	не убивать хорошую же концепцию?
+	public	static	void	setStepDelay	(long d)	{	step.setDelay(d);	}	//	РєРѕРЅС‚СЂРѕР»СЊ СЃРєСЂС‹С‚С‹С… СЌРІРµРЅС‚РѕРІ... РёРЅР°С‡Рµ РЅРёРєР°Рє =( РќРµС‚ РІ РјРёСЂРµ РёРґРµР°Р»СЊРЅС‹С… РєРѕРЅС†РµРїС†РёР№!
+	public	static	void	setStepFreqency	(float f)	{	step.setFreqency(f);}	//	РЅРµ СѓР±РёРІР°С‚СЊ С…РѕСЂРѕС€СѓСЋ Р¶Рµ РєРѕРЅС†РµРїС†РёСЋ?
 	public	static	void	setAnimDelay	(long d)	{	anim.setDelay(d);	}
 	public	static	void	setAnimFreqency	(float f)	{	anim.setFreqency(f);}
 	
-	private	static	List<Event>events	=	new ArrayList<Event>();	//	Список вторичных событий создаваемых извне
+	private	static	List<Event>events	=	new ArrayList<Event>();			//	РЎРїРёСЃРѕРє РІС‚РѕСЂРёС‡РЅС‹С… СЃРѕР±С‹С‚РёР№ СЃРѕР·РґР°РІР°РµРјС‹С… РёР·РІРЅРµ
 	public	static	void	addEvent(Event E)	{	events.add(E);		}
 	public	static	void	delEvent(Event E)	{	events.remove(E);	}
 
@@ -211,7 +211,7 @@ public class BasicEngine2D
 		if( wrap==null )	{	return;			}
 		if( WINDOW==null )	{	createWindow();	}
 		
-		//	Кросота!!! дефолтные эвенты
+//		РљСЂРѕСЃРѕС‚Р°!!! РґРµС„РѕР»С‚РЅС‹Рµ СЌРІРµРЅС‚С‹
 		calcFPS = new Event(1000,"Calc FPS")		{public void exec(){	FPS=FPSCounter;	FPSCounter=0;	}};
 		step	= new Event(50,"Simulation step")	{public void exec(){	if(wrap!=null)	wrap.step();	}};
 		anim	= new Event(60,"Animation step")	{public void exec(){	Sprite.stepAll();				}};
@@ -222,7 +222,7 @@ public class BasicEngine2D
 		
 		while( execute && wrap!=null )
 			{
-			next=Long.MAX_VALUE;	//	Событийная модель рулез!
+			next=Long.MAX_VALUE;	//	РЎРѕР±С‹С‚РёР№РЅР°СЏ РјРѕРґРµР»СЊ СЂСѓР»РµР·!
 			{{	{{calcFPS.test();}}		{{next=min(next,calcFPS.nextTime());}}	}}
 			updateInput();
 			{{	{{step.test();}}		{{next=min(next,step.nextTime());}}		}}
@@ -235,8 +235,8 @@ public class BasicEngine2D
 			FPSCounter++;
 			next -= System.currentTimeMillis() ;
 			if( queue()==0 && isOptimize() && next>1 )	sleep(next);
-			//	всё свободное время спим. Это очень важно для соседних потоков.
-			//	Например звука, который почему-то нельзя упаковать в один поток... ПОЗОР СТАНДАРТНЫМ ЛИБАМ ЗА ЭТО
+			//	РІСЃС‘ СЃРІРѕР±РѕРґРЅРѕРµ РІСЂРµРјСЏ СЃРїРёРј. Р­С‚Рѕ РѕС‡РµРЅСЊ РІР°Р¶РЅРѕ РґР»СЏ СЃРѕСЃРµРґРЅРёС… РїРѕС‚РѕРєРѕРІ.
+			//	РќР°РїСЂРёРјРµСЂ Р·РІСѓРєР°, РєРѕС‚РѕСЂС‹Р№ РїРѕС‡РµРјСѓ-С‚Рѕ РЅРµР»СЊР·СЏ СѓРїР°РєРѕРІР°С‚СЊ РІ РѕРґРёРЅ РїРѕС‚РѕРє(sic!)... РџРћР—РћР  РЎРўРђРќР”РђР РўРќР«Рњ Р›РР‘РђРњ Р—Рђ Р­РўРћ
 			}
 		
 		wrap.exit();
@@ -247,7 +247,7 @@ public class BasicEngine2D
 	private	static	int		queue	(				)	{	return(SpriteSourceLoader.queue()+SoundSourceLoader.queue());	}
 	private	static	long	min		(long a, long b )	{	return(a<b?a:b);	}
 	public	static	void	sleep	(	long t		)	{	try {	Thread.sleep(t);	} catch (InterruptedException e) {	e.printStackTrace();	}	}
-	public	static	void	stop	(				)	{	execute=false;	}	//	это может быть вызвано из другого потока или изнутри кода.
+	public	static	void	stop	(				)	{	execute=false;	}
 	public	static	String	dumpEvents()
 		{
 		StringBuilder r = new StringBuilder("");
@@ -260,7 +260,7 @@ public class BasicEngine2D
 		}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Рендер
+	//	Р РµРЅРґРµСЂ
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private	static Color background	=	Color.BLACK	;
@@ -270,7 +270,7 @@ public class BasicEngine2D
 	public	static void rend()
 		{
 		BufferStrategy bs = CANVAS.getBufferStrategy();
-		if( bs == null ){	CANVAS.createBufferStrategy(3);	return;	}	//	три буфера... возможно стоит поставить два? я хз))
+		if( bs == null ){	CANVAS.createBufferStrategy(3);	return;	}
 		Graphics2D G = (Graphics2D)bs.getDrawGraphics();
 		G.setColor( background );
 		G.fillRect( 0 , 0 , xSize , ySize );
@@ -309,7 +309,7 @@ public class BasicEngine2D
 		}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Сквозная проброска управления
+	//	РЎРєРІРѕР·РЅР°СЏ РїСЂРѕР±СЂРѕСЃРєР° СѓРїСЂР°РІР»РµРЅРёСЏ
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private	static void keyPressAction(KeyEvent E)		{	updateInput();	if( wrap!=null )	wrap.keyPressAction( E );	}
@@ -319,14 +319,14 @@ public class BasicEngine2D
 	private	static void mouseRelizAction(MouseEvent E)	{	updateInput();	if( wrap!=null )	wrap.mouseRelizAction( E );	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Загрузчик ресурса
+	//	Р—Р°РіСЂСѓР·РєР° СЂРµСЃСѓСЂСЃРѕРІ
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static boolean last;
 	private static String sourceFolder = "resources/";
 	private static String sourceInnerPath = "";
 	private static String sourceOuterPath = "";
-	public static void setSourceFolder	( String s )	{	if(s!=null)sourceFolder=s;		}	//	защита от выстрела в ногу
+	public static void setSourceFolder	( String s )	{	if(s!=null)sourceFolder=s;		}	//	пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 	public static void setInnerPath		( String p )	{	if(p!=null)sourceInnerPath=p;	}
 	public static void setOuterPath		( String p )	{	if(p!=null)sourceOuterPath=p;	}
 	
@@ -334,7 +334,7 @@ public class BasicEngine2D
 		{
 		InputStream INP = null;
 		INP = getInnerResource( source );
-		if( INP == null )	//	Пробуем загрузить сначала из внутренних ресурсов, затем из внешних
+		if( INP == null )	//	РџСЂРѕР±СѓРµРј Р·Р°РіСЂСѓР·РёС‚СЊ СЃРЅР°С‡Р°Р»Р° РёР· РІРЅСѓС‚СЂРµРЅРЅРёС… СЂРµСЃСѓСЂСЃРѕРІ, Р·Р°С‚РµРј РёР· РІРЅРµС€РЅРёС…
 		INP = getOuterResource( source );
 		return( INP );
 		}
@@ -352,7 +352,7 @@ public class BasicEngine2D
 		}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	Дамп потоков. Было нужно для отладки. В будущем можно удалить это. Наверное....
+	//	Р”Р°РјРї РїРѕС‚РѕРєРѕРІ. Р‘С‹Р»Рѕ РЅСѓР¶РЅРѕ РґР»СЏ РѕС‚Р»Р°РґРєРё. Р’ Р±СѓРґСѓС‰РµРј РјРѕР¶РЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚Рѕ. РќР°РІРµСЂРЅРѕРµ....
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static List<String> getRunningThreads()

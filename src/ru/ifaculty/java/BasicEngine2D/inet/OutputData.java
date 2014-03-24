@@ -10,7 +10,7 @@ package ru.ifaculty.java.BasicEngine2D.inet;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class OutputData extends OutputStream
+public class OutputData extends OutputStream	//	Поток в буфер
 	{
 	private	boolean closed=false;
 	

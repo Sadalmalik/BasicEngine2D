@@ -32,9 +32,9 @@ public class Sound
 	public	float	interval(float A, float B, float t)	{	return( (B-A)*t+A );	}
 	public	void	position(float x, float y)	//	2D sound
 		{
-		setBalance	( x / ( Math.abs(x)+scale ) );									////	вроде ничего сложного? Рациональная сигмоида =) http://ru.wikipedia.org/wiki/Сигмоида
-	//	setVolume	((float)( s / Math.sqrt( x*x + y*y + 5 ) ));					////	не катит - резкая граница затухания
-		setVolume	((float)( 1 / Math.cosh(Math.sqrt( x*x + y*y )/(3*scale)) ));	////	гуглите солитоны! Это много лучше чем 1/(R^2) !
+		setBalance	( x / ( Math.abs(x)+scale ) );									////	РІСЂРѕРґРµ РЅРёС‡РµРіРѕ СЃР»РѕР¶РЅРѕРіРѕ? Р Р°С†РёРѕРЅР°Р»СЊРЅР°СЏ СЃРёРіРјРѕРёРґР° =) http://ru.wikipedia.org/wiki/РЎРёРіРјРѕРёРґР°
+	//	setVolume	((float)( s / Math.sqrt( x*x + y*y + 5 ) ));					////	РЅРµ РєР°С‚РёС‚ - СЂРµР·РєР°СЏ РіСЂР°РЅРёС†Р° Р·Р°С‚СѓС…Р°РЅРёСЏ
+		setVolume	((float)( 1 / Math.cosh(Math.sqrt( x*x + y*y )/(3*scale)) ));	////	РіСѓРіР»РёС‚Рµ СЃРѕР»РёС‚РѕРЅС‹! Р­С‚Рѕ РјРЅРѕРіРѕ Р»СѓС‡С€Рµ С‡РµРј 1/(R^2) !
 		}
 	
 	public	Sound( SoundSource source )		{	this.source = source;	}
@@ -117,7 +117,7 @@ public class Sound
 	public	void	play( float x , float y , int l )
 		{
 		loop=(l>1)?(l):(1);
-		if( !ready )init();	//	если здесь это не делать - position(x,y) не даст результата
+		if( !ready )init();	//	РµСЃР»Рё Р·РґРµСЃСЊ СЌС‚Рѕ РЅРµ РґРµР»Р°С‚СЊ - position(x,y) РЅРµ РґР°СЃС‚ СЂРµР·СѓР»СЊС‚Р°С‚Р°
 		if( thread==null )
 			{
 			thread = new Thread	(	new Runnable()	{	public void run() {process();}	}	);

@@ -10,7 +10,7 @@ package ru.ifaculty.java.BasicEngine2D.inet;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class InputData extends InputStream
+public class InputData extends InputStream	//	Поток из буфера
 	{
 	private int count;
 	private	byte data[];
