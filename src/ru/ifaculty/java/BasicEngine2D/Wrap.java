@@ -5,6 +5,7 @@
 
 package ru.ifaculty.java.BasicEngine2D;
 
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
