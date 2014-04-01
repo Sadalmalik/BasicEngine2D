@@ -16,10 +16,10 @@ public class GraphicsWrap
 
 	public	void	drawLine( int x1 , int y1 , int x2 , int y2 )		{	context.drawLine( xHalf+x1 , yHalf-y1 , xHalf+x2 , yHalf-y2 );	}
 
-	public	void	drawOval( int x , int y , int width , int height )	{	context.drawOval( xHalf+x-width>>1 , yHalf-y-height>>1 , width , height );	}
-	public	void	fillOval( int x , int y , int width , int height )	{	context.fillOval( xHalf+x-width>>1 , yHalf-y-height>>1 , width , height );	}
-	public	void	drawRect( int x , int y , int width , int height )	{	context.drawRect( xHalf+x-width>>1 , yHalf-y-height>>1 , width , height );	}
-	public	void	fillRect( int x , int y , int width , int height )	{	context.fillRect( xHalf+x-width>>1 , yHalf-y-height>>1 , width , height );	}
+	public	void	drawOval( int x , int y , int width , int height )	{	context.drawOval( xHalf+x-width/2 , yHalf-y-height/2 , width , height );	}
+	public	void	fillOval( int x , int y , int width , int height )	{	context.fillOval( xHalf+x-width/2 , yHalf-y-height/2 , width , height );	}
+	public	void	drawRect( int x , int y , int width , int height )	{	context.drawRect( xHalf+x-width/2 , yHalf-y-height/2 , width , height );	}
+	public	void	fillRect( int x , int y , int width , int height )	{	context.fillRect( xHalf+x-width/2 , yHalf-y-height/2 , width , height );	}
 
 	public	void	drawRoundRect( int x , int y , int width , int height , int arcWidth , int arcHeight )	{	context.drawRoundRect( xHalf+x-width>>1 , yHalf-y-height>>1 , width , height , arcWidth , arcHeight );	}
 	public	void	fillRoundRect( int x , int y , int width , int height , int arcWidth , int arcHeight )	{	context.fillRoundRect( xHalf+x-width>>1 , yHalf-y-height>>1 , width , height , arcWidth , arcHeight );	}
