@@ -77,8 +77,8 @@ public class SoundSource extends Source
 		FrameSize/=FrameDivisor;
 		ready = true;
 		}
-	public	Sound	play()								{	if( !ready ){return(null);}	Sound S = new Sound( this );	S.play();	return(S);	}
-	public	Sound	play( int l )						{	if( !ready ){return(null);}	Sound S = new Sound( this );	S.play(l);	return(S);	}
+	public	Sound	play()								{	if( !ready ){return(null);}	Sound S = new Sound( this );	S.play();		return(S);	}
+	public	Sound	play( int l )						{	if( !ready ){return(null);}	Sound S = new Sound( this );	S.play(l);		return(S);	}
 	public	Sound	play( float x , float y )			{	if( !ready ){return(null);}	Sound S = new Sound( this );	S.play(x,y);	return(S);	}
 	public	Sound	play( float x , float y , int l )	{	if( !ready ){return(null);}	Sound S = new Sound( this );	S.play(x,y,l);	return(S);	}
 	}

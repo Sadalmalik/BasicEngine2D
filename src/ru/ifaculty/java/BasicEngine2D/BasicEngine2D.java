@@ -97,6 +97,7 @@ public class BasicEngine2D
 		wrap.xSize	=	display.xSize;		wrap.ySize	=	display.ySize	;
 		wrap.xHalf	=	display.xHalf;		wrap.yHalf	=	display.yHalf	;
 		wrap.xMouse	=	display.xMouse;		wrap.yMouse	=	display.yMouse	;
+		wrap.mouseIn=	display.mouseIn;
 		}
 	
 	private	static	Event	calcFPS, step, anim;
@@ -204,8 +205,8 @@ public class BasicEngine2D
 			}
 		if( isShowSourceInfo() )
 			{
-			GW.drawString(SpriteSourceLoader.getState(),10,display.ySize-35);
-			GW.drawString(SoundSourceLoader.getState(),10,display.ySize-15);
+			y+=15;	GW.drawRawString(SpriteSourceLoader.getState(),10,y);
+			y+=15;	GW.drawRawString(SoundSourceLoader.getState(),10,y);
 			}
 		}
 	

@@ -10,16 +10,14 @@ public class SoundSourceLoader
 	public static int available=0, loaded=0, wreck=0;
 	public static SoundSource head, midd, tail;
 	
-	//	Это комментарий к коду.
-	
 	public static int	queue()
 		{	return (available-loaded-wreck);	}
 	public static void	add( SoundSource s )
 		{
 		if( head==null ){	head=midd=tail=s;	}
 		else{
-			tail.next=s;	tail=s;
-			if( midd==null )midd=s;
+			tail.next=s;		tail=s;
+			if( midd==null )	midd=s;
 			}
 		available++;
 		}

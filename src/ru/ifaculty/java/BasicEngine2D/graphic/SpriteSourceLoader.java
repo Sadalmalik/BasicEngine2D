@@ -16,10 +16,8 @@ public class SpriteSourceLoader
 		{
 		if( head==null ){	head=midd=tail=s;	}
 		else{
-			tail.next=s;
-			tail=s;
-			if( midd==null )
-				midd=s;
+			tail.next=s;		tail=s;
+			if( midd==null )	midd=s;
 			}
 		available++;
 		}
