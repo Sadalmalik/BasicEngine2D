@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class BasicEngine2D
 	public		static	final	String	name		=	"Basic Engine 2D"	;
 	public		static	final	int		preVersion	=			0			;
 	public		static	final	int 	subVersion	=			2			;
-	public		static	final	int 	reliz		=			1			;
+	public		static	final	int 	reliz		=			12			;	//	тут была куча мелких правок
 	public		static	final	String	auth		=		 "Kaleb"		;
 	@SuppressWarnings("unused")	//всё норм, компилятору не нравятся условия на статичных данных... но мы-то знаем что данные ещё будут меняться!)
 	public		static	String	info()	{	return(name+", version "+preVersion+"."+subVersion+"."+((reliz>9)?(reliz):("0"+reliz))+", by "+auth);	}	//	No dead code! >:@
@@ -53,6 +54,7 @@ public class BasicEngine2D
 			public void mouseRelizAction(MouseEvent M)	{	if( wrap!=null )	wrap.mouseRelizAction( M );	}
 			};
 		display = new Display( listner );
+		display.setWindowTitle( info() );
 		}
 	public	static	Display	getDisplay			()				{	return display ;	}
 	public	static	void	setWindowTitle		(String title)	{	if ( display!=null )	display.setWindowTitle(title);		}

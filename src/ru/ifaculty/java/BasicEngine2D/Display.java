@@ -88,7 +88,7 @@ public class Display
 
 		sx=xSize;
 		sy=ySize;
-		Title=title;
+		if(title!=null)Title=title;
 		px=WINDOW.getX();
 		py=WINDOW.getY();
 		

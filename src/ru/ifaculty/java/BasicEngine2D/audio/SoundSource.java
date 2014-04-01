@@ -5,6 +5,7 @@
 
 package ru.ifaculty.java.BasicEngine2D.audio;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -46,12 +47,19 @@ public class SoundSource extends Source
 		{
 		if( ready )	return;
 		
-		InputStream INP = BasicEngine2D.getResource(FileName);	inner = BasicEngine2D.last;
+		InputStream INP = BasicEngine2D.getResource(FileName);
+		inner = BasicEngine2D.last;
 		if( INP==null )	{	error=1;	wreck=true; return; }
 		AudioInputStream AIS = null;
-		try	{	AIS = AudioSystem.getAudioInputStream(INP);	}
+		try	{	AIS = AudioSystem.getAudioInputStream( new BufferedInputStream( INP ) );	}
 		catch (UnsupportedAudioFileException e1){	error=200;	wreck=true;	return;	}
-		catch (IOException e1)					{	error=201;	wreck=true;	return;	}
+		catch (IOException e1)					{	error=201;	wreck=true;
+		System.out.println();
+		System.out.println();
+		e1.printStackTrace();
+		System.out.println();
+		System.out.println();
+		return;	}
 		if(	AIS == null	)	{	wreck=true;	return; }
 		
 		format = AIS.getFormat();
